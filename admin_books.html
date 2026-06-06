@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Manajemen Buku</h2>
+  <a class="btn btn-primary mb-3" href="{% url 'admin_book_create' %}">Tambah Buku</a>
+
+  <table class="table table-bordered align-middle">
+    <thead>
+      <tr>
+        <th>Gambar</th>
+        <th>Judul</th>
+        <th>Penulis</th>
+        <th>Tahun</th>
+        <th>Aksi</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for book in books %}
+        <tr>
+          <td style="width: 90px;">
+            {% if book.image %}
+              <img src="{{ book.image.url }}" alt="{{ book.title }}" style="width: 70px; height: 95px; object-fit: cover; border-radius: 6px;">
+            {% else %}
+              <span class="text-muted">Tidak ada</span>
+            {% endif %}
+          </td>
+          <td>{{ book.title }}</td>
+          <td>{{ book.author }}</td>
+          <td>{{ book.year }}</td>
+          <td>
+            <a class="btn btn-sm btn-secondary" href="{% url 'admin_book_edit' book.pk %}">Edit</a>
+            <form method="post" action="{% url 'admin_book_delete' book.pk %}" style="display:inline;">
+              {% csrf_token %}
+              <button class="btn btn-sm btn-danger" type="submit">Delete</button>
+            </form>
+          </td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="5" class="text-center">Belum ada buku.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

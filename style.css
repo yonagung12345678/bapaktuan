@@ -1,0 +1,10 @@
+body {
+  background: #dc9f9fa5;
+  font-family: Arial, sans-serif;
+}
+
+.main-content {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+}
